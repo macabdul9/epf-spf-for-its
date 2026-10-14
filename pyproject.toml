@@ -1,0 +1,41 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "epf-spf"
+version = "0.1.0"
+description = "Entropic particle filtering (paper and its_hub variants, weight-temperature variants) and Self-Probing Particle Filtering for audio multiple-choice reasoning"
+requires-python = ">=3.10"
+dependencies = [
+    "numpy>=1.26",
+    "openai>=1.40",
+    "pandas>=2.0",
+    "pyarrow>=14",
+    "soundfile>=0.12",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "ruff>=0.5"]
+# only for tests/test_parity.py, which imports the previous implementation
+legacy = ["aiohttp", "backoff", "certifi"]
+
+[project.scripts]
+epf-spf = "epf_spf.run:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/epf_spf"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = [
+    "data: needs the benchmark data on this machine",
+    "legacy: compares against the previous implementation (entropic-particle-filter/)",
+]
