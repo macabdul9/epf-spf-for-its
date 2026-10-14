@@ -3,7 +3,7 @@
 ## Install
 
 ```bash
-cd epf-spf-its-for-audio-reasoning
+cd epf-spf-its-reimplementation
 uv venv .venv --python 3.12
 VIRTUAL_ENV=.venv uv pip install -e ".[dev]"            # add ,legacy to run the parity tests
 ```

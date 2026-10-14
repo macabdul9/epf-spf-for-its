@@ -1,4 +1,4 @@
-# epf-spf-its-for-audio-reasoning
+# epf-spf-its-reimplementation
 
 Particle filtering over the reasoning steps of an audio-language model answering
 multiple-choice questions. One small, tested implementation of four methods:

@@ -6,7 +6,9 @@ import pytest
 
 REPO = Path(__file__).resolve().parents[1]
 PROJECT = REPO.parent
-LEGACY_ROOT = Path(os.environ.get("LEGACY_EPF_ROOT", PROJECT / "entropic-particle-filter"))
+# The previous implementation is used only when asked for explicitly, so the suite never
+# depends on anything outside this repo by default.
+LEGACY_ROOT = os.environ.get("LEGACY_EPF_ROOT")
 DATA_ROOT = Path(os.environ.get("EPF_DATA_ROOT", PROJECT / "epf_data"))
 EXTENDED_DIR = Path(
     os.environ.get("EPF_EXTENDED_DIR", PROJECT / "extended_dataset" / "distractor_results")
@@ -15,10 +17,13 @@ EXTENDED_DIR = Path(
 
 @pytest.fixture(scope="session")
 def legacy():
-    """The previous implementation, imported for parity checks only."""
-    if not (LEGACY_ROOT / "babel-ship" / "probe_epf.py").exists():
-        pytest.skip(f"previous implementation not found at {LEGACY_ROOT}")
-    for path in (str(LEGACY_ROOT), str(LEGACY_ROOT / "babel-ship")):
+    """The previous implementation, imported for parity checks only (opt-in)."""
+    if LEGACY_ROOT is None:
+        pytest.skip("parity checks are opt-in: set LEGACY_EPF_ROOT")
+    root = Path(LEGACY_ROOT)
+    if not (root / "babel-ship" / "probe_epf.py").exists():
+        pytest.skip(f"previous implementation not found at {root}")
+    for path in (str(root), str(root / "babel-ship")):
         if path not in sys.path:
             sys.path.insert(0, path)
     import judge_client

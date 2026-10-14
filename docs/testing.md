@@ -14,7 +14,7 @@ No test sends a network request or needs a GPU.
 
 | what | default | override |
 |---|---|---|
-| previous implementation | `../entropic-particle-filter` | `LEGACY_EPF_ROOT` |
+| previous implementation | not used unless set (opt-in) | `LEGACY_EPF_ROOT` |
 | benchmark data | `../epf_data` | `EPF_DATA_ROOT` |
 | extended dataset | `../extended_dataset/distractor_results` | `EPF_EXTENDED_DIR` |
 | stored result rows (selector and extraction parity) | a few fixed files under `../epf-with-different-prms/` and `../epf_results/` | |
